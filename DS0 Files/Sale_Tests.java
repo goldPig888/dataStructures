@@ -75,12 +75,18 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
             throw (Exception) e.getCause();
         }
+
+
     }
 
     @Test(timeout = 2000)
@@ -103,7 +109,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -132,7 +142,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -161,7 +175,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -190,7 +208,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -219,7 +241,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -248,7 +274,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -277,7 +307,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -306,7 +340,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
@@ -335,7 +373,11 @@ public class Sale_Tests {
 
             method.invoke(method, actual);
 
-            Assert.assertEquals(expected.toString(),actual.toString());
+            Assert.assertEquals(expected.size(), actual.size());
+            for(int i=0; i < expected.size(); i++) {
+                Assert.assertEquals(expected.get(i).getName(), actual.get(i).getName());
+                Assert.assertEquals(expected.get(i).getPrice(), actual.get(i).getPrice(),.00011);
+            }
         }
         catch ( InvocationTargetException e )
         {
