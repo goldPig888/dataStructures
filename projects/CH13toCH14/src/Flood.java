@@ -2,13 +2,13 @@ import java.util.logging.XMLFormatter;
 
 public class Flood {
     public static void floodFill(char[][] grid, int col, int row, char toReplace, char newValue) {
-        if (col < 0 || row < 0 || col >= grid.length || row >= grid[0].length) {
+        if (col < 0 || row < 0 || row >= grid.length || col >= grid[0].length) {
             return;
         }
-        if (grid[col][row] != toReplace) {
+        if (grid[row][col] != toReplace) {
             return;
         }
-        grid[col][row] = newValue;
+        grid[row][col] = newValue;
         floodFill(grid, col + 1, row, toReplace, newValue);
         floodFill(grid, col - 1, row, toReplace, newValue);
         floodFill(grid, col, row + 1, toReplace, newValue);
