@@ -1,20 +1,15 @@
-import java.io.File;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class LineAdder {
-    public static int[] sumLines(String filename){
-        int[] sum;
 
-        File file = new File(filename);
-        Scanner s = new Scanner(file);
-        for (int i = 0; s.hasNextLine(); i++) {
-            String line = s.nextLine();
-            String[] numbers = line.split(" ");
-            for (String number : numbers) {
-                sum[i] += Integer.parseInt(number);
+    public static int[] sumLines(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+            return br.lines().mapToInt(line -> Arrays.stream(line.split(","))
+                            .mapToInt(number -> Integer.parseInt(number.trim()))
+                            .sum()).toArray();
 
-
-            }
-        }
     }
 }
