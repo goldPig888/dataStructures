@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Grid_Tests {
+public class Area_Tests {
     public String generateClassName(String name)
     {
         if(getClass().toString().contains("."))
@@ -27,14 +27,14 @@ public class Grid_Tests {
     @Before
     public void setup()
     {
-        allowedImports.add("java.util.*");
-        allowedImports.add("java.io.*");
+        allowedImports.add("java.util.ArrayList");
+        allowedImports.add("java.io.File");
         allowedImports.add("java.util.Scanner");
     }
 
     @Test(timeout = 2000)
     public void checkImports() throws Exception{
-        String className = "Grid";
+        String className = "Area";
         String fileName = "src/"+generateClassName(className).replaceAll("\\.","/")+".java";
         boolean allowedOnly = true;
         ArrayList<String> invalidImport = new ArrayList<>();
@@ -74,8 +74,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test1() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("columnSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "grid1.txt";
         File file = new File(fileName);
@@ -94,10 +94,10 @@ public class Grid_Tests {
                     "2 1 1");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {93, 2, 20};
+            int actual = (int)method.invoke(method, fileName);
+            int expected =99;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -116,8 +116,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test2() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("rowSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "grid1.txt";
         File file = new File(fileName);
@@ -130,16 +130,16 @@ public class Grid_Tests {
             FileWriter fileWriter = new FileWriter(file);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print("3X4\n" +
-                    "3 4 7\n" +
-                    "87 -4 11\n" +
-                    "1 1 1\n" +
+                    "3 1 7\n" +
+                    "11 -8 11\n" +
+                    "1 -1 1\n" +
                     "2 1 1");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {14, 94, 3, 4};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 19;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -158,8 +158,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test3() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("columnSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "grid2.txt";
         File file = new File(fileName);
@@ -175,10 +175,10 @@ public class Grid_Tests {
                     "3");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {3};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 3;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -197,8 +197,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test4() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("rowSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "grid2.txt";
         File file = new File(fileName);
@@ -211,13 +211,13 @@ public class Grid_Tests {
             FileWriter fileWriter = new FileWriter(file);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print("1X1\n" +
-                    "143");
+                    "777");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {143};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 777;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -236,8 +236,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test5() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("columnSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "nums.txt";
         File file = new File(fileName);
@@ -254,10 +254,10 @@ public class Grid_Tests {
                     "4 4 7 8 88");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {7, 9, 13, 5, 95};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 103;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -276,8 +276,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test6() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("rowSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "nums.txt";
         File file = new File(fileName);
@@ -290,14 +290,14 @@ public class Grid_Tests {
             FileWriter fileWriter = new FileWriter(file);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print("5X2\n" +
-                    "3 5 6 -3 7\n"+
-                    "4 4 7 8 88");
+                    "3 -5 66 -3 -7\n"+
+                    "44 44 -7 -8 88");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {18, 111};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 108;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -316,8 +316,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test7() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("columnSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "nums2.txt";
         File file = new File(fileName);
@@ -338,10 +338,10 @@ public class Grid_Tests {
                     "33 2 1 ");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {96, -65, 126};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 94;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -360,8 +360,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test8() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("rowSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "nums2.txt";
         File file = new File(fileName);
@@ -374,18 +374,18 @@ public class Grid_Tests {
             FileWriter fileWriter = new FileWriter(file);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print("3X6\n" +
-                    "6 7 5\n" +
+                    "66 76 15\n" +
                     "44 -88 77\n" +
-                    "9 7 9 \n" +
-                    "3 5 1\n" +
-                    "1 2 33\n" +
-                    "33 2 1 ");
+                    "19 67 69 \n" +
+                    "3 65 61\n" +
+                    "61 62 33\n" +
+                    "33 42 41 ");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {18, 33, 25, 9, 36, 36};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 274;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -404,8 +404,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test9() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("columnSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "square.txt";
         File file = new File(fileName);
@@ -423,10 +423,10 @@ public class Grid_Tests {
                     "9 7 9");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {59, -74, 91};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 93;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {
@@ -445,8 +445,8 @@ public class Grid_Tests {
 
     @Test(timeout = 2000)
     public void test10() throws Exception {
-        Class<?> classRef = Class.forName(generateClassName("Grid"));
-        Method method = classRef.getMethod("rowSums",String.class);
+        Class<?> classRef = Class.forName(generateClassName("Area"));
+        Method method = classRef.getMethod("largestAreaSum",String.class);
 
         String fileName = "square.txt";
         File file = new File(fileName);
@@ -459,15 +459,15 @@ public class Grid_Tests {
             FileWriter fileWriter = new FileWriter(file);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print("3X3\n" +
-                    "6 7 5\n" +
-                    "44 -88 77\n" +
+                    "6 15 15\n" +
+                    "4 11 16\n" +
                     "9 7 9");
             printWriter.close();
 
-            int[] actual = (int[])method.invoke(method, fileName);
-            int[] expected = {18, 33, 25};
+            int actual = (int)method.invoke(method, fileName);
+            int expected = 53;
 
-            Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+            Assert.assertEquals(expected, actual);
         }
         catch ( InvocationTargetException e )
         {

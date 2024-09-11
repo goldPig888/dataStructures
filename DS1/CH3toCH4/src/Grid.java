@@ -1,5 +1,6 @@
-import java.io.*;
-import java.util.*;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Grid {
     public static int[] rowSums(String fileName) throws IOException {
@@ -32,8 +33,8 @@ public class Grid {
     public static int[] columnSums(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String[] dimensions = reader.readLine().split("X");
-        int rows = Integer.parseInt(dimensions[0]);
-        int cols = Integer.parseInt(dimensions[1]);
+        int cols = Integer.parseInt(dimensions[0]);
+        int rows = Integer.parseInt(dimensions[1]);
 
         int[][] grid = new int[rows][cols];
         for (int i = 0; i < rows; i++) {
