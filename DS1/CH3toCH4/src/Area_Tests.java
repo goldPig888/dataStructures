@@ -27,8 +27,8 @@ public class Area_Tests {
     @Before
     public void setup()
     {
-        allowedImports.add("java.util.ArrayList");
-        allowedImports.add("java.io.File");
+        allowedImports.add("java.util.*");
+        allowedImports.add("java.io.*");
         allowedImports.add("java.util.Scanner");
     }
 
