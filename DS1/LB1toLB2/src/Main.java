@@ -1,15 +1,118 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.*;
+import java.io.*;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+class Main{
+    static boolean isWinner(char[][] board, char player){
+        for (int i = 0; i<3; i++){
+            if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) || (board[0][i] == player && board[1][i] == player && board[2][i] == player))
+                return true;
+        }
+        if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) || (board[0][2] == player && board[1][1] == player && board[2][0] == player))
+            return true;
+        return false;
+
+    }
+
+    static boolean isCat(char[][] b){
+        if (count(b) == 9) return true;
+        return false;
+
+    }
+    static int count(char[][] b){
+        int c = 0;
+        for (char[] i : b)
+            for (char i2: i)
+                if (i2 == 'O' || i2 == 'X')
+                    c++;
+        return c;
+    }
+    static void toString(char[][] board){
+        String st = " " + board[0][0] + " | " + board[0][1] + " | " + board[0][2] + " \n-----------\n" + " " + board[1][0] + " | " + board[1][1] + " | " + board[1][2] + " \n-----------\n" + " " + board[2][0] + " | " + board[2][1] + " | " + board[2][2] + " ";
+        System.out.println(st+"\n");
+    }
+
+    static String toString(char[][] board, char player){
+        return board[0][0] + " " + board[0][1] + " " + board[0][2] + "," + board[1][0] + " " + board[1][1] + " " + board[1][2] + "," + board[2][0] + " " + board[2][1] + " " + board[2][2] + "," + player;
+    }
+
+    static void saveGame(char[][] board, char player) throws IOException{
+        FileWriter fw = new FileWriter("save.txt");
+        fw.write(toString(board, player));
+        fw.close();
+    }
+
+    static boolean checkX(int x, char[][] board) throws IOException{
+        if (x == 3){
+            saveGame(board, 'X');
+            System.out.println("Your game has stopped");
+            return true;
+        }
+        return false;
+    }
+
+    static boolean checkO(int x, char[][] board ) throws IOException{
+        if (x == 3){
+            saveGame(board, 'O');
+            System.out.println("Your game has stopped");
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String args[]) throws IOException{
+        char[][] board = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        Scanner s = new Scanner(System.in);
+        int p = 1;
+        int c = 0;
+        int r = 0;
+        toString(board);
+
+        while (!isCat(board)){
+            if (p>0){
+
+                System.out.println("Entering column 3 for the row or column will save your game");
+                System.out.println("X enter the column for your move (0-2):");
+                c = s.nextInt();
+                if (checkX(c, board)) break;
+                System.out.println("X enter the row for your move(0-2):");
+                r = s.nextInt();
+                if (checkX(r, board)) break;
+
+                try{
+                    if (board[r][c] == ' '){
+                        board[r][c] = 'X';
+                        p*=-1;
+                        System.out.print("\n");
+                        toString(board);
+                        if (isWinner(board, 'X')){System.out.print("X WINS!"); break;}
+                    }else{throw new Exception();}
+                }catch (Exception e){
+                    System.out.println("\nInvalid move, enter a new move.\n");
+                }
+            }
+            else{
+                System.out.println("O enter the column for your move (0-2):");
+                c = s.nextInt();
+                if (checkO(c, board)) break;
+                System.out.println("O enter the row for your move(0-2):");
+                r = s.nextInt();
+                if (checkO(c, board)) break;
+
+
+
+                try{
+                    if (board[r][c] == ' '){
+                        board[r][c] = 'O';
+                        p*=-1;
+                        System.out.print("\n");
+                        toString(board);
+                        if (isWinner(board, 'O')){System.out.print("O WINS!"); break;}
+                    }else{ throw new Exception();}
+                }catch (Exception e){
+                    System.out.println("\nInvalid move, enter a new move.\n");
+                }
+
+            }
         }
     }
 }
