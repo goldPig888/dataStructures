@@ -31,13 +31,13 @@ class Main{
         System.out.println(st+"\n");
     }
 
-    static String toString(char[][] board, char player){
-        return board[0][0] + " " + board[0][1] + " " + board[0][2] + "," + board[1][0] + " " + board[1][1] + " " + board[1][2] + "," + board[2][0] + " " + board[2][1] + " " + board[2][2] + "," + player;
+    static String toStringSave(char[][] board){
+        return board[0][0] + " " + board[0][1] + " " + board[0][2] + "," + board[1][0] + " " + board[1][1] + " " + board[1][2] + "," + board[2][0] + " " + board[2][1] + " " + board[2][2] + ",";
     }
 
     static void saveGame(char[][] board, char player) throws IOException{
         FileWriter fw = new FileWriter("save.txt");
-        fw.write(toString(board, player));
+        fw.write(toStringSave(board));
         fw.close();
     }
 
@@ -59,60 +59,91 @@ class Main{
         return false;
     }
 
+    static char[][] loadGame() throws IOException{
+        char[][] board = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+        Scanner reader = new Scanner(new File("save.txt"));
+        String[] line = reader.nextLine().split(",");
+        for (int r = 0; r<3; r++){
+            String[] row = line[r].split(" ");
+            for (int c = 0; c<3; c++){
+                board[r][c] = row[c].charAt(0);
+            }
+        }
+        reader.close();
+        return board;
+    }
+
     public static void main(String args[]) throws IOException{
         char[][] board = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         Scanner s = new Scanner(System.in);
         int p = 1;
         int c = 0;
         int r = 0;
+        int load = 0;
+        boolean loading = false;
+
+        System.out.println("\nDid you previously save a game? Load last saved game (1), start new game (2)");
+        load = s.nextInt();
+        if (load == 1) board = loadGame();
+
         toString(board);
 
-        while (!isCat(board)){
-            if (p>0){
 
-                System.out.println("Entering column 3 for the row or column will save your game");
-                System.out.println("X enter the column for your move (0-2):");
-                c = s.nextInt();
-                if (checkX(c, board)) break;
-                System.out.println("X enter the row for your move(0-2):");
-                r = s.nextInt();
-                if (checkX(r, board)) break;
+            while (!isCat(board)) {
+                if (p > 0) {
+                    System.out.println("Entering column 3 for the row or column will save your game");
+                    System.out.println("X enter the column for your move (0-2):");
+                    c = s.nextInt();
 
-                try{
-                    if (board[r][c] == ' '){
-                        board[r][c] = 'X';
-                        p*=-1;
-                        System.out.print("\n");
-                        toString(board);
-                        if (isWinner(board, 'X')){System.out.print("X WINS!"); break;}
-                    }else{throw new Exception();}
-                }catch (Exception e){
-                    System.out.println("\nInvalid move, enter a new move.\n");
+                    if (checkX(c, board)) break;
+                    System.out.println("X enter the row for your move(0-2):");
+                    r = s.nextInt();
+                    if (checkX(r, board)) break;
+
+                    try {
+                        if (board[r][c] == ' ') {
+                            board[r][c] = 'X';
+                            p *= -1;
+                            System.out.print("\n");
+                            toString(board);
+                            if (isWinner(board, 'X')) {
+                                System.out.print("X WINS!");
+                                break;
+                            }
+                        } else {
+                            throw new Exception();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("\nInvalid move, enter a new move.\n");
+                    }
+                } else {
+                    System.out.println("O is thinking...");
+                    c = (int) (Math.random() * 2);
+                    r = (int) (Math.random() * 2);
+
+
+                    try {
+                        if (board[r][c] == ' ') {
+                            board[r][c] = 'O';
+                            p *= -1;
+                            System.out.print("\n");
+                            toString(board);
+                            if (isWinner(board, 'O')) {
+                                System.out.print("O WINS!");
+                                break;
+                            }
+                        } else {
+                            throw new Exception();
+                        }
+                    } catch (Exception e) {
+
+                    }
+
                 }
             }
-            else{
-                System.out.println("O enter the column for your move (0-2):");
-                c = s.nextInt();
-                if (checkO(c, board)) break;
-                System.out.println("O enter the row for your move(0-2):");
-                r = s.nextInt();
-                if (checkO(c, board)) break;
 
 
 
-                try{
-                    if (board[r][c] == ' '){
-                        board[r][c] = 'O';
-                        p*=-1;
-                        System.out.print("\n");
-                        toString(board);
-                        if (isWinner(board, 'O')){System.out.print("O WINS!"); break;}
-                    }else{ throw new Exception();}
-                }catch (Exception e){
-                    System.out.println("\nInvalid move, enter a new move.\n");
-                }
 
-            }
         }
     }
-}
