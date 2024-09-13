@@ -1,16 +1,17 @@
 import java.util.*;
 import java.io.*;
 
-class Main{
+class TicTacToe{
     static boolean isWinner(char[][] board, char player){
         for (int i = 0; i<3; i++){
             if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) || (board[0][i] == player && board[1][i] == player && board[2][i] == player))
+
                 return true;
         }
         if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) || (board[0][2] == player && board[1][1] == player && board[2][0] == player))
+
             return true;
         return false;
-
     }
 
     static boolean isCat(char[][] b){
@@ -32,10 +33,10 @@ class Main{
     }
 
     static String toStringSave(char[][] board){
-        return board[0][0] + " " + board[0][1] + " " + board[0][2] + "," + board[1][0] + " " + board[1][1] + " " + board[1][2] + "," + board[2][0] + " " + board[2][1] + " " + board[2][2] + ",";
+        return "" + board[0][0] + board[0][1] + board[0][2] + "," + board[1][0] + board[1][1] + board[1][2] + "," + board[2][0] + board[2][1] + board[2][2];
     }
 
-    static void saveGame(char[][] board, char player) throws IOException{
+    static void saveGame(char[][] board) throws IOException{
         FileWriter fw = new FileWriter("save.txt");
         fw.write(toStringSave(board));
         fw.close();
@@ -43,16 +44,7 @@ class Main{
 
     static boolean checkX(int x, char[][] board) throws IOException{
         if (x == 3){
-            saveGame(board, 'X');
-            System.out.println("Your game has stopped");
-            return true;
-        }
-        return false;
-    }
-
-    static boolean checkO(int x, char[][] board ) throws IOException{
-        if (x == 3){
-            saveGame(board, 'O');
+            saveGame(board);
             System.out.println("Your game has stopped");
             return true;
         }
@@ -64,30 +56,32 @@ class Main{
         Scanner reader = new Scanner(new File("save.txt"));
         String[] line = reader.nextLine().split(",");
         for (int r = 0; r<3; r++){
-            String[] row = line[r].split(" ");
             for (int c = 0; c<3; c++){
-                board[r][c] = row[c].charAt(0);
+                board[r][c] = line[r].charAt(c);
             }
         }
         reader.close();
         return board;
     }
 
+
+
     public static void main(String args[]) throws IOException{
         char[][] board = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
         Scanner s = new Scanner(System.in);
+        Random rand = new Random();
         int p = 1;
         int c = 0;
         int r = 0;
         int load = 0;
         boolean loading = false;
+        File file = new File("save.txt");
 
-        System.out.println("\nDid you previously save a game? Load last saved game (1), start new game (2)");
-        load = s.nextInt();
-        if (load == 1) board = loadGame();
+        if (file.exists()) {
+            board = loadGame();
+        }
 
         toString(board);
-
 
             while (!isCat(board)) {
                 if (p > 0) {
@@ -107,6 +101,8 @@ class Main{
                             System.out.print("\n");
                             toString(board);
                             if (isWinner(board, 'X')) {
+                                if (file.delete())
+                                    System.out.println("Your save file has been deleted.");
                                 System.out.print("X WINS!");
                                 break;
                             }
@@ -118,8 +114,8 @@ class Main{
                     }
                 } else {
                     System.out.println("O is thinking...");
-                    c = (int) (Math.random() * 2);
-                    r = (int) (Math.random() * 2);
+                    c = rand.nextInt(3);
+                    r = rand.nextInt(3);
 
 
                     try {
@@ -129,6 +125,8 @@ class Main{
                             System.out.print("\n");
                             toString(board);
                             if (isWinner(board, 'O')) {
+                                if (file.delete())
+                                    System.out.println("Your save file has been deleted.");
                                 System.out.print("O WINS!");
                                 break;
                             }
@@ -141,9 +139,5 @@ class Main{
 
                 }
             }
-
-
-
-
         }
     }
