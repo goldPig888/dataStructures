@@ -16,6 +16,43 @@ public class ToH {
         }
     }
 
+    public String convert(StackInterface<Integer> stack, int r){
+        String s = "";
+        String disk = "";
+        if (stack.get(r) == 0){
+            disk = "|";
+        }
+        else if (stack.get(r) == 1){
+            disk = "*";
+        }
+        else if (stack.get(r) == 2){
+            disk = "***";
+        }
+        else if (stack.get(r) == 3){
+            disk = "*****";
+        }
+        else if (stack.get(r) == 4){
+            disk = "*******";
+        }
+        else if (stack.get(r) == 5){
+            disk = "*********";
+        }
+        else if (stack.get(r) == 6){
+            disk = "***********";
+        }
+        for (int i = 0; i<6-stack.get(r); i++){
+            s += " ";
+        }
+        return s + disk;
+    }
+
+    public void showPoles(){
+
+        for (int r=5; r>=0; r--){
+            System.out.printf("%s %s %s\n",convert(stack1, r), convert(stack2, r), convert(stack3, r));
+        }
+    }
+
     public static void main(String[] args) {
         ToH toh = new ToH();
 
@@ -24,14 +61,16 @@ public class ToH {
         int diskCount = scanner.nextInt();
         toh.disks(diskCount);
 
-        reset((MyStack<Integer>) toh.stack1, 5-diskCount);
-        reset((MyStack<Integer>) toh.stack2, 5 );
-        reset((MyStack<Integer>) toh.stack3, 5);
+        reset((MyStack<Integer>) toh.stack1, 6-diskCount);
+        reset((MyStack<Integer>) toh.stack2, 6 );
+        reset((MyStack<Integer>) toh.stack3, 6);
 
         System.out.println("stack 1 " + toh.stack1.toString());
         System.out.println("stack 2 " + toh.stack2.toString());
         System.out.println("stack 3 " + toh.stack3.toString());
         System.out.println("-------------------------");
+
+        toh.showPoles();
     }
 
 }
