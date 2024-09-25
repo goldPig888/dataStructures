@@ -31,6 +31,7 @@ public class ToH {
         System.out.println("stack 1 " + toh.stack1.toString());
         System.out.println("stack 2 " + toh.stack2.toString());
         System.out.println("stack 3 " + toh.stack3.toString());
+        System.out.println("-------------------------");
     }
 
 }
