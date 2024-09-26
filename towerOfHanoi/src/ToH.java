@@ -17,71 +17,75 @@ public class ToH {
     }
 
     public String convert(StackInterface<Integer> stack, int r){
-        String s = "";
-        String s2 = "";
         String disk = "";
+
         if (stack.get(r) == 0){
             disk = "-";
+        } else {
+            disk = "X".repeat(stack.get(r)*2+1);
         }
-        else if (stack.get(r) == 1){
-            disk = "XXX";
-        }
-        else if (stack.get(r) == 2){
-            disk = "XXXXX";
-        }
-        else if (stack.get(r) == 3){
-            disk = "XXXXXXX";
-        }
-        else if (stack.get(r) == 4){
-            disk = "XXXXXXXXX";
-        }
-        else if (stack.get(r) == 5){
-            disk = "XXXXXXXXXXX";
-        }
-        else if (stack.get(r) == 6){
-            disk = "XXXXXXXXXXXXX";
-        }
-        if (stack.equals(stack1)){
-            for (int i = 0; i<6-stack.get(r); i++){
-                s += " ";
-            }
-            return s + disk;
-        }
+        String s = " ".repeat(6-stack.get(r));
 
-        for (int i = 0; i<6-stack.get(r); i++){
-            s += " ";
-        }
-        s2 = s + "      ";
-
-        return s + disk + s2;
+        return s + disk + s;
     }
 
     public void showPoles(){
-
+        String s = "";
         for (int r=stack1.size()-1; r>=0; r--){
-            System.out.println(convert(stack1, r) + "" + convert(stack2, r) + "" + convert(stack3, r));
+            s = convert(stack1, r) +  convert(stack2, r) + convert(stack3, r);
+            System.out.println(s);
+
         }
+        System.out.println("-".repeat(s.length()));
     }
 
 
     public static void main(String[] args) {
         ToH toh = new ToH();
+        Scanner s = new Scanner(System.in);
+        int from = -1;
+        int to = -1;
+        boolean playing = true;
 
-        System.out.println("Enter the number of disks you would like to play with (3-6): ");
-        Scanner scanner = new Scanner(System.in);
-        int diskCount = scanner.nextInt();
-        toh.disks(diskCount);
+        // this is first round
+        while (true) {
+            System.out.println("Enter the number of disks you would like to play with (3-6): ");
+            int diskCount = s.nextInt();
+            if (diskCount < 3 || diskCount > 6) {
+                System.out.println("That value is out of range, please try again.");
+                continue;
+            }
+            toh.disks(diskCount);
 
-        reset((MyStack<Integer>) toh.stack1, 2);
-        reset((MyStack<Integer>) toh.stack2, diskCount+2);
-        reset((MyStack<Integer>) toh.stack3, diskCount+2);
+            reset((MyStack<Integer>) toh.stack1, 2);
+            reset((MyStack<Integer>) toh.stack2, diskCount + 2);
+            reset((MyStack<Integer>) toh.stack3, diskCount + 2);
+            toh.showPoles();
+            break;
+        }
 
-        System.out.println("stack 1 " + toh.stack1.toString());
-        System.out.println("stack 2 " + toh.stack2.toString());
-        System.out.println("stack 3 " + toh.stack3.toString());
-        //System.out.println("-------------------------");
+        while (playing) {
 
-        toh.showPoles();
+            System.out.println("Enter your from pole (1-3):");
+            from = s.nextInt();
+            while (from < 1 || from > 3) {
+                System.out.println("\tInvalid Move.");
+                System.out.println("Enter your from pole (1-3):");
+                from = s.nextInt();
+            }
+
+            System.out.println("Enter your to pole (1-3):");
+            to = s.nextInt();
+            while (to < 1 || to > 3) {
+                System.out.println("\tInvalid Move.");
+                System.out.println("Enter your to pole (1-3):");
+                to = s.nextInt();
+            }
+
+            break;
+
+        }
     }
-
 }
+
+
