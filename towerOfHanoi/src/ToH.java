@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 public class ToH {
     StackInterface<Integer> stack1 = new MyStack<Integer>();
     StackInterface<Integer> stack2 = new MyStack<Integer>();
@@ -18,40 +18,51 @@ public class ToH {
 
     public String convert(StackInterface<Integer> stack, int r){
         String s = "";
+        String s2 = "";
         String disk = "";
         if (stack.get(r) == 0){
-            disk = "|";
+            disk = "-";
         }
         else if (stack.get(r) == 1){
-            disk = "*";
+            disk = "XXX";
         }
         else if (stack.get(r) == 2){
-            disk = "***";
+            disk = "XXXXX";
         }
         else if (stack.get(r) == 3){
-            disk = "*****";
+            disk = "XXXXXXX";
         }
         else if (stack.get(r) == 4){
-            disk = "*******";
+            disk = "XXXXXXXXX";
         }
         else if (stack.get(r) == 5){
-            disk = "*********";
+            disk = "XXXXXXXXXXX";
         }
         else if (stack.get(r) == 6){
-            disk = "***********";
+            disk = "XXXXXXXXXXXXX";
         }
+        if (stack.equals(stack1)){
+            for (int i = 0; i<6-stack.get(r); i++){
+                s += " ";
+            }
+            return s + disk;
+        }
+
         for (int i = 0; i<6-stack.get(r); i++){
             s += " ";
         }
-        return s + disk;
+        s2 = s + "      ";
+
+        return s + disk + s2;
     }
 
     public void showPoles(){
 
-        for (int r=5; r>=0; r--){
-            System.out.printf("%s %s %s\n",convert(stack1, r), convert(stack2, r), convert(stack3, r));
+        for (int r=stack1.size()-1; r>=0; r--){
+            System.out.println(convert(stack1, r) + "" + convert(stack2, r) + "" + convert(stack3, r));
         }
     }
+
 
     public static void main(String[] args) {
         ToH toh = new ToH();
@@ -61,14 +72,14 @@ public class ToH {
         int diskCount = scanner.nextInt();
         toh.disks(diskCount);
 
-        reset((MyStack<Integer>) toh.stack1, 6-diskCount);
-        reset((MyStack<Integer>) toh.stack2, 6 );
-        reset((MyStack<Integer>) toh.stack3, 6);
+        reset((MyStack<Integer>) toh.stack1, 2);
+        reset((MyStack<Integer>) toh.stack2, diskCount+2);
+        reset((MyStack<Integer>) toh.stack3, diskCount+2);
 
         System.out.println("stack 1 " + toh.stack1.toString());
         System.out.println("stack 2 " + toh.stack2.toString());
         System.out.println("stack 3 " + toh.stack3.toString());
-        System.out.println("-------------------------");
+        //System.out.println("-------------------------");
 
         toh.showPoles();
     }
