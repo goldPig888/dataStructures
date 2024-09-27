@@ -54,7 +54,7 @@ public class ToH {
         }
     }
 
-    
+            
     public void display(){
         System.out.println("Stack 1: " + stack1.toString());
         System.out.println("Stack 2: " + stack2.toString());
@@ -78,10 +78,10 @@ public class ToH {
             }
             toh.disks(diskCount);
 
-            reset((MyStack<Integer>) toh.stack1, 2);
-            reset((MyStack<Integer>) toh.stack2, diskCount + 2);
-            reset((MyStack<Integer>) toh.stack3, diskCount + 2);
-            toh.showPoles();
+            //reset((MyStack<Integer>) toh.stack1, 2);
+            //reset((MyStack<Integer>) toh.stack2, diskCount + 2);
+            //reset((MyStack<Integer>) toh.stack3, diskCount + 2);
+            //toh.showPoles();
             break;
         }
 
@@ -104,6 +104,8 @@ public class ToH {
             }
 
             //move(to, from);
+            toh.move(to, from);
+            toh.display();
 
             break;
 
