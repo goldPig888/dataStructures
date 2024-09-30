@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class ToH {
+public class TowerOfHanoi {
     StackInterface<Integer> stack1 = new MyStack<Integer>();
     StackInterface<Integer> stack2 = new MyStack<Integer>();
     StackInterface<Integer> stack3 = new MyStack<Integer>();
@@ -58,21 +58,30 @@ public class ToH {
 
     public void move(int to, int from){
         try {
-            if (to == 1 && from == 2 && stack1.peek() > stack2.peek()) {
-                stack1.push(stack2.pop());
-            } else if (to == 1 && from == 3 && stack1.peek() > stack3.peek()) {
-                stack1.push(stack3.pop());
-            } else if (to == 2 && from == 1 && stack2.peek() > stack1.peek()) {
-                stack2.push(stack1.pop());
-            } else if (to == 2 && from == 3 && stack2.peek() > stack3.peek()) {
-                stack2.push(stack3.pop());
-            } else if (to == 3 && from == 1 && stack3.peek() > stack1.peek()) {
-                stack3.push(stack1.pop());
-            } else if (to == 3 && from == 2 && stack3.peek() > stack2.peek()) {
-                stack3.push(stack2.pop());
+            if (to == 1 && from == 2 ) {
+                if (stack1.isEmpty() || stack1.peek() > stack2.peek()) {stack1.push(stack2.pop());}
+            } else if (to == 1 && from == 3) {
+                if (stack1.isEmpty() || stack1.peek() > stack3.peek()) {stack1.push(stack3.pop());}
+            } else if (to == 2 && from == 1) {
+                if (stack2.isEmpty() || stack2.peek() > stack1.peek()) {stack2.push(stack1.pop());}
+            } else if (to == 2 && from == 3) {
+                if (stack2.isEmpty() || stack2.peek() > stack3.peek()) {stack2.push(stack3.pop());}
+            } else if (to == 3 && from == 1) {
+                if (stack3.isEmpty() || stack3.peek() > stack1.peek()) {stack3.push(stack1.pop());}
+            } else if (to == 3 && from == 2 ) {
+                if (stack3.isEmpty() || stack3.peek() > stack2.peek()) {stack3.push(stack2.pop());}
             }
-        } Exception e {
+        } catch (Exception e) {
+            System.out.println("Invalid Move");
         }
+    }
+
+    public boolean checkWin(int diskCount){
+        if (stack3.size() == diskCount){
+            System.out.println("You Win!");
+            return false;
+        }
+        return true;
     }
 
             
@@ -83,18 +92,18 @@ public class ToH {
     }
 
     public static void main(String[] args) {
-        ToH toh = new ToH();
+        TowerOfHanoi toh = new TowerOfHanoi();
         Scanner s = new Scanner(System.in);
         int from = -1;
         int to = -1;
         int height = 0;
+        int diskCount = 0;
 
         boolean playing = true;
 
-        // this is first round
         while (true) {
             System.out.println("Enter the number of disks you would like to play with (3-6): ");
-            int diskCount = s.nextInt();
+            diskCount = s.nextInt();
             height = diskCount + 2;
             if (diskCount < 3 || diskCount > 6) {
                 System.out.println("That value is out of range, please try again.");
@@ -124,10 +133,10 @@ public class ToH {
                 to = s.nextInt();
             }
 
-            //move(to, from);
             toh.move(to, from);
-            toh.display();
+            //toh.display();
             toh.showPoles(height);
+            playing = toh.checkWin(diskCount);
 
 
         }
