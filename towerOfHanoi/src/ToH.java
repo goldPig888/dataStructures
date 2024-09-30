@@ -10,6 +10,14 @@ public class ToH {
         }
     }
 
+    public static void unReset(MyStack<Integer> stack){
+        for (int i = stack.size()-1; i>=0; i--){
+            if (stack.get(i) == 0){
+                stack.pop();
+            }
+        }
+    }
+
     public void disks(int n) {
         for (int i = n; i > 0; i--) {
             stack1.push(i);
@@ -29,28 +37,41 @@ public class ToH {
         return s + disk + s;
     }
 
-    public void showPoles(){
+    public void showPoles(int height){
         String s = "";
+        reset((MyStack<Integer>) stack1, height- stack1.size());
+        reset((MyStack<Integer>) stack2, height - stack2.size());
+        reset((MyStack<Integer>) stack3, height - stack3.size());
+
+
         for (int r=stack1.size()-1; r>=0; r--){
+
             s = convert(stack1, r) +  convert(stack2, r) + convert(stack3, r);
             System.out.println(s);
         }
         System.out.println("-".repeat(s.length()));
+
+        unReset((MyStack<Integer>) stack1);
+        unReset((MyStack<Integer>) stack2);
+        unReset((MyStack<Integer>) stack3);
     }
 
     public void move(int to, int from){
-        if (to == 1 && from == 2){
-            stack1.push(stack2.pop());
-        } else if (to == 1 && from == 3){
-            stack1.push(stack3.pop());
-        } else if (to == 2 && from == 1){
-            stack2.push(stack1.pop());
-        } else if (to == 2 && from == 3){
-            stack2.push(stack3.pop());
-        } else if (to == 3 && from == 1){
-            stack3.push(stack1.pop());
-        } else if (to == 3 && from == 2){
-            stack3.push(stack2.pop());
+        try {
+            if (to == 1 && from == 2 && stack1.peek() > stack2.peek()) {
+                stack1.push(stack2.pop());
+            } else if (to == 1 && from == 3 && stack1.peek() > stack3.peek()) {
+                stack1.push(stack3.pop());
+            } else if (to == 2 && from == 1 && stack2.peek() > stack1.peek()) {
+                stack2.push(stack1.pop());
+            } else if (to == 2 && from == 3 && stack2.peek() > stack3.peek()) {
+                stack2.push(stack3.pop());
+            } else if (to == 3 && from == 1 && stack3.peek() > stack1.peek()) {
+                stack3.push(stack1.pop());
+            } else if (to == 3 && from == 2 && stack3.peek() > stack2.peek()) {
+                stack3.push(stack2.pop());
+            }
+        } Exception e {
         }
     }
 
@@ -66,22 +87,22 @@ public class ToH {
         Scanner s = new Scanner(System.in);
         int from = -1;
         int to = -1;
+        int height = 0;
+
         boolean playing = true;
 
         // this is first round
         while (true) {
             System.out.println("Enter the number of disks you would like to play with (3-6): ");
             int diskCount = s.nextInt();
+            height = diskCount + 2;
             if (diskCount < 3 || diskCount > 6) {
                 System.out.println("That value is out of range, please try again.");
                 continue;
             }
             toh.disks(diskCount);
 
-            //reset((MyStack<Integer>) toh.stack1, 2);
-            //reset((MyStack<Integer>) toh.stack2, diskCount + 2);
-            //reset((MyStack<Integer>) toh.stack3, diskCount + 2);
-            //toh.showPoles();
+            toh.showPoles(height);
             break;
         }
 
@@ -106,9 +127,7 @@ public class ToH {
             //move(to, from);
             toh.move(to, from);
             toh.display();
-
-            break;
-
+            toh.showPoles(height);
 
 
         }
