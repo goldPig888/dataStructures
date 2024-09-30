@@ -100,6 +100,7 @@ public class TowerOfHanoi {
         int diskCount = 0;
 
         boolean playing = true;
+        boolean input = true;
 
         while (true) {
             System.out.println("Enter the number of disks you would like to play with (3-6): ");
@@ -116,21 +117,24 @@ public class TowerOfHanoi {
         }
 
         while (playing) {
+            input = true;
 
-            System.out.println("Enter your from pole (1-3):");
-            from = s.nextInt();
-            while (from < 1 || from > 3) {
-                System.out.println("\tInvalid Move.");
+            while (input) {
+
                 System.out.println("Enter your from pole (1-3):");
                 from = s.nextInt();
-            }
+                if (from < 1 || from > 3) {
+                    System.out.println("\tInvalid Move.");
+                    continue;
+                }
 
-            System.out.println("Enter your to pole (1-3):");
-            to = s.nextInt();
-            while (to < 1 || to > 3) {
-                System.out.println("\tInvalid Move.");
                 System.out.println("Enter your to pole (1-3):");
                 to = s.nextInt();
+                if (to < 1 || to > 3) {
+                    System.out.println("\tInvalid Move.");
+                    continue;
+                }
+                input = false;
             }
 
             toh.move(to, from);
