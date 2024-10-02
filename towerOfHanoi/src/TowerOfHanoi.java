@@ -25,16 +25,13 @@ public class TowerOfHanoi {
     }
 
     public String convert(StackInterface<Integer> stack, int r){
-        String disk = "";
+        int diskSize = stack.get(r);
+        String disk = diskSize == 0 ? "-" : "X".repeat(diskSize * 2 + 1);
+        int totalWidth = 8;
+        int padding = (totalWidth - disk.length()) / 2;
 
-        if (stack.get(r) == 0){
-            disk = "-";
-        } else {
-            disk = "X".repeat(stack.get(r)*2+1);
-        }
-        String s = " ".repeat(6-stack.get(r));
+        return " ".repeat(padding) + disk + " ".repeat(totalWidth - disk.length() - padding);
 
-        return s + disk + s;
     }
 
     public void showPoles(int height){
@@ -49,7 +46,7 @@ public class TowerOfHanoi {
             s = convert(stack1, r) +  convert(stack2, r) + convert(stack3, r);
             System.out.println(s);
         }
-        System.out.println("-".repeat(s.length()));
+        System.out.println("-".repeat(s.length()) + "\n");
 
         unReset((MyStack<Integer>) stack1);
         unReset((MyStack<Integer>) stack2);
@@ -84,13 +81,6 @@ public class TowerOfHanoi {
         return true;
     }
 
-            
-    public void display(){
-        System.out.println("Stack 1: " + stack1.toString());
-        System.out.println("Stack 2: " + stack2.toString());
-        System.out.println("Stack 3: " + stack3.toString());
-    }
-
     public static void main(String[] args) {
         TowerOfHanoi toh = new TowerOfHanoi();
         Scanner s = new Scanner(System.in);
@@ -103,7 +93,7 @@ public class TowerOfHanoi {
         boolean input = true;
 
         while (true) {
-            System.out.println("Enter the number of disks you would like to play with (3-6): ");
+            System.out.println("Enter the number of disks you would like to play with (3-6):");
             diskCount = s.nextInt();
             height = diskCount + 2;
             if (diskCount < 3 || diskCount > 6) {
@@ -138,11 +128,8 @@ public class TowerOfHanoi {
             }
 
             toh.move(to, from);
-            //toh.display();
             toh.showPoles(height);
             playing = toh.checkWin(diskCount);
-
-
         }
     }
 }
