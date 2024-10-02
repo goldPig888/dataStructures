@@ -4,15 +4,15 @@ public class TowerOfHanoi {
     StackInterface<Integer> stack2 = new MyStack<Integer>();
     StackInterface<Integer> stack3 = new MyStack<Integer>();
 
-    public static void reset(MyStack<Integer> stack, int n){
-        for (int i = n; i>0; i--){
+    public static void reset(MyStack<Integer> stack, int n) {
+        for (int i = n; i > 0; i--) {
             stack.push(0);
         }
     }
 
-    public static void unReset(MyStack<Integer> stack){
-        for (int i = stack.size()-1; i>=0; i--){
-            if (stack.get(i) == 0){
+    public static void unReset(MyStack<Integer> stack) {
+        for (int i = stack.size() - 1; i >= 0; i--) {
+            if (stack.get(i) == 0) {
                 stack.pop();
             }
         }
@@ -24,26 +24,33 @@ public class TowerOfHanoi {
         }
     }
 
-    public String convert(StackInterface<Integer> stack, int r){
-        int diskSize = stack.get(r);
-        String disk = diskSize == 0 ? "-" : "X".repeat(diskSize * 2 + 1);
-        int totalWidth = 8;
-        int padding = (totalWidth - disk.length()) / 2;
+    public String convert(StackInterface<Integer> stack, int r) {
 
-        return " ".repeat(padding) + disk + " ".repeat(totalWidth - disk.length() - padding);
+            String disk = "";
+
+            if (stack.get(r) == 0){
+                disk = "-";
+            } else {
+                disk = "X".repeat(stack.get(r)*2+1);
+            }
+            String s = " ".repeat( (8 - disk.length()) / 2);
+
+            return s + disk + s;
+
 
     }
 
-    public void showPoles(int height){
+    public void showPoles(int height) {
         String s = "";
-        reset((MyStack<Integer>) stack1, height- stack1.size());
+        reset((MyStack<Integer>) stack1, height - stack1.size());
         reset((MyStack<Integer>) stack2, height - stack2.size());
         reset((MyStack<Integer>) stack3, height - stack3.size());
 
 
-        for (int r=stack1.size()-1; r>=0; r--){
 
-            s = convert(stack1, r) +  convert(stack2, r) + convert(stack3, r);
+        for (int r = stack1.size() - 1; r >= 0; r--) {
+
+            s = " " + convert(stack1, r) + convert(stack2, r) + convert(stack3, r);
             System.out.println(s);
         }
         System.out.println("-".repeat(s.length()) + "\n");
@@ -53,29 +60,59 @@ public class TowerOfHanoi {
         unReset((MyStack<Integer>) stack3);
     }
 
-    public void move(int to, int from){
+    public boolean move(int to, int from) {
         try {
-            if (to == 1 && from == 2 ) {
-                if (stack1.isEmpty() || stack1.peek() > stack2.peek()) {stack1.push(stack2.pop());}
+            if (to == 1 && from == 2) {
+                if (stack1.isEmpty() || stack1.peek() > stack2.peek()) {
+                    stack1.push(stack2.pop());
+                    return true;
+                } else {
+                    throw new Exception();
+                }
             } else if (to == 1 && from == 3) {
-                if (stack1.isEmpty() || stack1.peek() > stack3.peek()) {stack1.push(stack3.pop());}
+                if (stack1.isEmpty() || stack1.peek() > stack3.peek()) {
+                    stack1.push(stack3.pop());
+                    return true;
+                } else {
+                    throw new Exception();
+                }
             } else if (to == 2 && from == 1) {
-                if (stack2.isEmpty() || stack2.peek() > stack1.peek()) {stack2.push(stack1.pop());}
+                if (stack2.isEmpty() || stack2.peek() > stack1.peek()) {
+                    stack2.push(stack1.pop());
+                    return true;
+                } else {
+                    throw new Exception();
+                }
             } else if (to == 2 && from == 3) {
-                if (stack2.isEmpty() || stack2.peek() > stack3.peek()) {stack2.push(stack3.pop());}
+                if (stack2.isEmpty() || stack2.peek() > stack3.peek()) {
+                    stack2.push(stack3.pop());
+                    return true;
+                } else {
+                    throw new Exception();
+                }
             } else if (to == 3 && from == 1) {
-                if (stack3.isEmpty() || stack3.peek() > stack1.peek()) {stack3.push(stack1.pop());}
-            } else if (to == 3 && from == 2 ) {
-                if (stack3.isEmpty() || stack3.peek() > stack2.peek()) {stack3.push(stack2.pop());}
+                if (stack3.isEmpty() || stack3.peek() > stack1.peek()) {
+                    stack3.push(stack1.pop());
+                    return true;
+                } else {
+                    throw new Exception();
+                }
+            } else if (to == 3 && from == 2) {
+                if (stack3.isEmpty() || stack3.peek() > stack2.peek()) {
+                    stack3.push(stack2.pop());
+                    return true;
+                } else {
+                    throw new Exception();
+                }
             }
         } catch (Exception e) {
-            System.out.println("Invalid Move");
+            System.out.println("\tInvalid Move.");
         }
+        return false;
     }
 
-    public boolean checkWin(int diskCount){
-        if (stack3.size() == diskCount){
-            System.out.println("You Win!");
+    public boolean checkWin(int diskCount) {
+        if (stack3.size() == diskCount) {
             return false;
         }
         return true;
@@ -88,6 +125,7 @@ public class TowerOfHanoi {
         int to = -1;
         int height = 0;
         int diskCount = 0;
+        int moves = 0;
 
         boolean playing = true;
         boolean input = true;
@@ -101,7 +139,6 @@ public class TowerOfHanoi {
                 continue;
             }
             toh.disks(diskCount);
-
             toh.showPoles(height);
             break;
         }
@@ -124,13 +161,17 @@ public class TowerOfHanoi {
                     System.out.println("\tInvalid Move.");
                     continue;
                 }
-                input = false;
-            }
 
-            toh.move(to, from);
-            toh.showPoles(height);
-            playing = toh.checkWin(diskCount);
+                if (toh.move(to, from)) {
+                    moves++;
+                    toh.showPoles(height);
+                    playing = toh.checkWin(diskCount);
+                    input = false;
+
+                }
+            }
         }
+        System.out.println("Congratulations you solved " + diskCount + " disks in " + moves + " moves. A perfect solutions is 7 moves.");
     }
 }
 
