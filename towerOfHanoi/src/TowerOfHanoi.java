@@ -24,23 +24,25 @@ public class TowerOfHanoi {
         }
     }
 
-    public String convert(StackInterface<Integer> stack, int r) {
+    public String convert(StackInterface<Integer> stack, int r, int maxWidth) {
+        String disk = "";
 
-            String disk = "";
+        if (stack.get(r) == 0) {
+            disk = "-";
+        } else {
+            disk = "X".repeat(stack.get(r) * 2 + 1);
+        }
+        int currentWidth = disk.length();
 
-            if (stack.get(r) == 0){
-                disk = "-";
-            } else {
-                disk = "X".repeat(stack.get(r)*2+1);
-            }
-            String s = " ".repeat( (8 - disk.length()) / 2);
+        int spaces = ((maxWidth - currentWidth) / 2);
 
-            return s + disk + s;
+        String s = " ".repeat(spaces);
 
-
+        return s + disk + s;
     }
 
-    public void showPoles(int height) {
+
+    public void showPoles(int height, int maxWidth) {
         String s = "";
         reset((MyStack<Integer>) stack1, height - stack1.size());
         reset((MyStack<Integer>) stack2, height - stack2.size());
@@ -50,7 +52,7 @@ public class TowerOfHanoi {
 
         for (int r = stack1.size() - 1; r >= 0; r--) {
 
-            s = " " + convert(stack1, r) + convert(stack2, r) + convert(stack3, r);
+            s = " " + convert(stack1, r, maxWidth) +  " " + convert(stack2, r, maxWidth) + " "+convert(stack3, r, maxWidth) + " ";
             System.out.println(s);
         }
         System.out.println("-".repeat(s.length()) + "\n");
@@ -106,7 +108,6 @@ public class TowerOfHanoi {
                 }
             }
         } catch (Exception e) {
-            System.out.println("\tInvalid Move.");
         }
         return false;
     }
@@ -126,6 +127,7 @@ public class TowerOfHanoi {
         int height = 0;
         int diskCount = 0;
         int moves = 0;
+        int maxWidth = 0;
 
         boolean playing = true;
         boolean input = true;
@@ -139,9 +141,11 @@ public class TowerOfHanoi {
                 continue;
             }
             toh.disks(diskCount);
-            toh.showPoles(height);
+            maxWidth = diskCount * 2 + 1;
+            toh.showPoles(height, maxWidth);
             break;
         }
+
 
         while (playing) {
             input = true;
@@ -164,14 +168,25 @@ public class TowerOfHanoi {
 
                 if (toh.move(to, from)) {
                     moves++;
-                    toh.showPoles(height);
+                    toh.showPoles(height, maxWidth);
                     playing = toh.checkWin(diskCount);
                     input = false;
-
+                }else{
+                    System.out.println("\tInvalid Move.");
                 }
             }
         }
-        System.out.println("Congratulations you solved " + diskCount + " disks in " + moves + " moves. A perfect solutions is 7 moves.");
+        int perfectMove = 0;
+        if (diskCount == 3){
+            perfectMove = 7;
+        }else if (diskCount == 4) {
+            perfectMove = 15;
+        }else if (diskCount == 5) {
+            perfectMove = 31;
+        }else if (diskCount == 6) {
+            perfectMove = 63;
+        }
+        System.out.println("Congratulations you solved " + diskCount + " disks in " + moves + " moves. A perfect solutions is "+ perfectMove+" moves.");
     }
 }
 
