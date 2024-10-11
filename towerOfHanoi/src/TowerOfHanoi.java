@@ -33,11 +33,9 @@ public class TowerOfHanoi {
             disk = "X".repeat(stack.get(r) * 2 + 1);
         }
         int currentWidth = disk.length();
-
         int spaces = ((maxWidth - currentWidth) / 2);
 
         String s = " ".repeat(spaces);
-
         return s + disk + s;
     }
 
