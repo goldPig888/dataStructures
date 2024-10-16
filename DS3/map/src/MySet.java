@@ -36,7 +36,7 @@ public class MySet<T> implements SetInterface<T>, Iterable<T> {
 
     @Override
     public Iterator<T> iterator(){
-        return iterator;
+        return set.iterator();
     }
 
     @Override
